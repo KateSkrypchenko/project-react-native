@@ -1,26 +1,30 @@
 import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
-  Text,
   View,
-  TextInput,
   ImageBackground,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 
+import * as Font from "expo-font";
+
 import RegistrationScreen from "./Screens/RegistrationScreen";
+import LoginScreen from "./Screens/LoginScreen";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={require("./assets/images/image-bg.jpg")}
-        style={styles.image}
-      >
-        <RegistrationScreen></RegistrationScreen>
-        {/* <Text style={styles.title}>Kate</Text>
-        <TextInput style={styles.input}></TextInput> */}
-        <StatusBar style="auto" />
-      </ImageBackground>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <ImageBackground
+          source={require("./assets/images/image-bg.jpg")}
+          style={styles.image}
+        >
+          <LoginScreen />
+          {/* <RegistrationScreen /> */}
+          <StatusBar style="auto" />
+        </ImageBackground>
+      </TouchableWithoutFeedback>
     </View>
   );
 }
@@ -34,18 +38,6 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     resizeMode: "cover",
-    // alignItems: "center",
     justifyContent: "flex-end",
   },
-
-  // title: {
-  //   fontSize: 40,
-  // },
-
-  // input: {
-  //   width: 100,
-  //   height: 20,
-  //   color: "black",
-  //   borderWidth: 2,
-  // },
 });
