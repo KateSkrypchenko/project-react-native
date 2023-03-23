@@ -7,8 +7,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { Routers } from "./Routers";
 
 export default function App() {
-  // const route = useRoute(false);
-
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <NavigationContainer>
