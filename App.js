@@ -1,43 +1,19 @@
-import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  View,
-  ImageBackground,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
+import React from "react";
 
-import * as Font from "expo-font";
+import { TouchableWithoutFeedback, Keyboard } from "react-native";
 
-import RegistrationScreen from "./Screens/RegistrationScreen";
-import LoginScreen from "./Screens/LoginScreen";
+import { NavigationContainer } from "@react-navigation/native";
+
+import { Routers } from "./Routers";
 
 export default function App() {
+  // const route = useRoute(false);
+
   return (
-    <View style={styles.container}>
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <ImageBackground
-          source={require("./assets/images/image-bg.jpg")}
-          style={styles.image}
-        >
-          <LoginScreen />
-          {/* <RegistrationScreen /> */}
-          <StatusBar style="auto" />
-        </ImageBackground>
-      </TouchableWithoutFeedback>
-    </View>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <NavigationContainer>
+        <Routers />
+      </NavigationContainer>
+    </TouchableWithoutFeedback>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-
-  image: {
-    flex: 1,
-    resizeMode: "cover",
-    justifyContent: "flex-end",
-  },
-});
