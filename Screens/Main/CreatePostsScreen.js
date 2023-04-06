@@ -9,6 +9,11 @@ import {
   Image,
 } from "react-native";
 
+import { useDispatch, useSelector } from "react-redux";
+
+import { uploadPhoto, createPost } from "../../redux/posts/postsOperations";
+import { selectId } from "../../redux/auth/authSelectors";
+
 import { MaterialIcons, Feather } from "@expo/vector-icons";
 
 import { Camera } from "expo-camera";
@@ -22,6 +27,10 @@ export default function CreatePostsScreen({ navigation }) {
   const [title, setTitle] = useState("");
   const [inputLocation, setInputLocation] = useState("");
   const [location, setLocation] = useState(null);
+
+  const userId = useSelector(selectId);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     (async () => {
@@ -39,20 +48,26 @@ export default function CreatePostsScreen({ navigation }) {
     })();
   }, []);
 
-  console.log(location);
-
   const takePhoto = async () => {
     const photo = await camera.takePictureAsync();
-    const locationPhoto = Location.reverseGeocodeAsync(location);
-    setInputLocation(locationPhoto);
+    const locationPhoto = await Location.reverseGeocodeAsync(location).then(
+      (response) => {
+        return response[0];
+      }
+    );
+    setInputLocation(locationPhoto.city);
     setPhoto(photo.uri);
   };
 
-  const createPosts = () => {
+  const createPosts = async () => {
     if (!title || !inputLocation || !photo) {
       alert("Enter all data please!!!");
       return;
     }
+    const { payload } = await dispatch(uploadPhoto(photo));
+    await dispatch(
+      createPost({ photo: payload, title, inputLocation, location, userId })
+    );
     navigation.navigate("DefaultScreen", { photo, title, inputLocation });
   };
 
